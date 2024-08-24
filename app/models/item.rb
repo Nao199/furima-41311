@@ -10,14 +10,14 @@ class Item < ApplicationRecord
   belongs_to :shipping_day
 
   #空の投稿を保存できないようにする
-  validates :name, :description, :price, presence: true
+  validates :image, :name, :description, :price, presence: true
 
   #価格は、¥300‐¥9999999の間のみ保存可能
   validates :price, presence: true,
   numericality: {
     greater_than_or_equal_to: 300,
     less_than_or_equal_to: 9_999_999,
-    message: "は¥300~¥9,999,999の間で入力してください"
+    message: "must be less than or equal to 9999999"
   }
   #価格は、半角数字のみ保存可能
   validates :price, presence: true,
