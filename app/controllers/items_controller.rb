@@ -7,4 +7,13 @@ class ItemsController < ApplicationController
     @items = Item.new
   end
 
+  def create
+    Item.create(item_params)
+    redirect_to '/'
+  end
+
+  private
+  def Item_params
+    params.require(:item).permit(:image, :name, :description)
+  end
 end
