@@ -70,19 +70,19 @@ RSpec.describe Item, type: :model do
       it '価格が300円未満では出品できない' do
         @item.price = 299
         @item.valid?
-        expect(@item.errors.full_messages).to include "Price must be less than or equal to 9999999"
+        expect(@item.errors.full_messages).to include 'Price must be less than or equal to 9999999'
       end
 
       it '価格が9,999,999円を超えると出品できない' do
         @item.price = 10_000_000
         @item.valid?
-        expect(@item.errors.full_messages).to include "Price must be less than or equal to 9999999"
+        expect(@item.errors.full_messages).to include 'Price must be less than or equal to 9999999'
       end
 
       it '価格が半角数値でないと出品できない' do
         @item.price = '１０００'
         @item.valid?
-        expect(@item.errors.full_messages).to include "Price は半角数値で入力してください"
+        expect(@item.errors.full_messages).to include 'Price は半角数値で入力してください'
       end
     end
   end

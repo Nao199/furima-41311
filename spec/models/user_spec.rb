@@ -9,7 +9,7 @@ RSpec.describe User, type: :model do
     context '新規登録できるとき' do
       it 'nicknameとemail、passwordとpassword_confirmation、first_nameとlast_name、first_name_kanaとlast_name_kana、birth_dateが存在すれば登録できる' do
         expect(@user).to be_valid
-      end 
+      end
     end
 
     context '新規登録できないとき' do
@@ -64,7 +64,7 @@ RSpec.describe User, type: :model do
         @user.password_confirmation = 'abcdef'
         @user.valid?
         expect(@user.errors.full_messages).to include('Password には英字と数字の両方を含めて設定してください')
-      end  
+      end
 
       it 'passwordが半角数字のみでは登録できない' do
         @user.password = '123456'
