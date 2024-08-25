@@ -36,25 +36,25 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Category can't be blank")
       end
-  
+
       it '商品の状態が未選択（id: 1）の場合は出品できない' do
         @item.condition_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Condition can't be blank")
       end
-  
+
       it '配送料の負担が未選択（id: 1）の場合は出品できない' do
         @item.shipping_fee_status_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping fee status can't be blank")
       end
-  
+
       it '発送元の地域が未選択（id: 1）の場合は出品できない' do
         @item.prefecture_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Prefecture can't be blank")
       end
-  
+
       it '発送までの日数が未選択（id: 1）の場合は出品できない' do
         @item.shipping_day_id = 1
         @item.valid?
@@ -90,7 +90,6 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include('User must exist')
       end
-
     end
   end
 end
