@@ -33,7 +33,7 @@ class ItemsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-  
+
   def destroy
     @item.destroy
     redirect_to root_path
