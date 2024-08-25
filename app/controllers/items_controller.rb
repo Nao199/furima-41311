@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new]
 
   def index
-    @items = Item.all
+    @items = Item.order(created_at: :desc) # 出品日時が新しい順にソート
   end
 
   def new
