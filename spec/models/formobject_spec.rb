@@ -68,6 +68,24 @@ RSpec.describe Formobject, type: :model do
         expect(@formobject.errors[:phone_number]).to include('must be 10 or 11 digits')
       end
 
+      it '電話番号に半角数字以外が含まれる場合、無効であること' do
+        @formobject.phone_number = '090-1234-5678'
+        @formobject.valid?
+        expect(@formobject.errors[:phone_number]).to include('must be 10 or 11 digits')
+      end
+      
+      it '電話番号に全角数字が含まれる場合、無効であること' do
+        @formobject.phone_number = '０９０１２３４５６７８'
+        @formobject.valid?
+        expect(@formobject.errors[:phone_number]).to include('must be 10 or 11 digits')
+      end
+      
+      it '電話番号にアルファベットが含まれる場合、無効であること' do
+        @formobject.phone_number = '090abcd5678'
+        @formobject.valid?
+        expect(@formobject.errors[:phone_number]).to include('must be 10 or 11 digits')
+      end
+
       it 'トークンが空の場合、無効であること' do
         @formobject.token = ''
         @formobject.valid?
