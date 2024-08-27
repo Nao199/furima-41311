@@ -16,6 +16,7 @@ class OrdersController < ApplicationController
   def create
     @formobject = Formobject.new(formobject_params)
     if @formobject.valid?
+      Payjp.api_key = "sk_test_2c9506fef855cee88a66bc35"  # 自身のPAY.JPテスト秘密鍵を記述しましょう
       pay_item
       @formobject.save
       return redirect_to root_path
