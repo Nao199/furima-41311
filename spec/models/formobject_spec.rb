@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Formobject, type: :model do
   before do
-    user = FactoryBot.create(:user)
-    @formobject = FactoryBot.build(:formobject, user_id: user.id)
+    @user = FactoryBot.create(:user)
+    @item = FactoryBot.create(:item)
+    @formobject = FactoryBot.build(:formobject, user_id: @user.id, item_id: @item.id)
   end
 
   describe '購入機能' do
@@ -55,8 +56,14 @@ RSpec.describe Formobject, type: :model do
         expect(@formobject.errors[:phone_number]).to include("can't be blank")
       end
 
-      it '電話番号のフォーマットが不正な場合、無効であること' do
-        @formobject.phone_number = '090-1234-5678'
+      it '電話番号が9桁以下の場合、無効であること' do
+        @formobject.phone_number = '123456789'
+        @formobject.valid?
+        expect(@formobject.errors[:phone_number]).to include('must be 10 or 11 digits')
+      end
+
+      it '電話番号が12桁以上の場合、無効であること' do
+        @formobject.phone_number = '123456789012'
         @formobject.valid?
         expect(@formobject.errors[:phone_number]).to include('must be 10 or 11 digits')
       end
@@ -65,6 +72,18 @@ RSpec.describe Formobject, type: :model do
         @formobject.token = ''
         @formobject.valid?
         expect(@formobject.errors[:token]).to include("can't be blank")
+      end
+
+      it 'user_idが空の場合、無効であること' do
+        @formobject.user_id = nil
+        @formobject.valid?
+        expect(@formobject.errors[:user_id]).to include("can't be blank")
+      end
+
+      it 'item_idが空の場合、無効であること' do
+        @formobject.item_id = nil
+        @formobject.valid?
+        expect(@formobject.errors[:item_id]).to include("can't be blank")
       end
     end
   end
