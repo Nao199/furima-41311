@@ -7,19 +7,17 @@ class OrdersController < ApplicationController
   # 現在のユーザーが商品の出品者でないかを確認する
   before_action :check_item_owner
 
-
   def index
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @formobject = Formobject.new
   end
 
   def create
     @formobject = Formobject.new(formobject_params)
     if @formobject.valid?
-      Payjp.api_key = "sk_test_2c9506fef855cee88a66bc35"  # 自身のPAY.JPテスト秘密鍵を記述しましょう
       pay_item
       @formobject.save
-      return redirect_to root_path
+      redirect_to root_path
     else
       gon.public_key = ENV['PAYJP_PUBLIC_KEY']
       render :index, status: :unprocessable_entity
@@ -48,7 +46,6 @@ class OrdersController < ApplicationController
   end
 
   def pay_item
-    # Payjp.api_key = "sk_test_2c9506fef855cee88a66bc35"
     Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
       amount: @item.price,        # 商品の金額
@@ -56,5 +53,4 @@ class OrdersController < ApplicationController
       currency: 'jpy'             # 通貨の種類（日本円）
     )
   end
-  
 end

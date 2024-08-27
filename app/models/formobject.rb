@@ -11,7 +11,6 @@ class Formobject
     validates :token
   end
 
-  
   def save
     ActiveRecord::Base.transaction do
       order = Order.create(user_id:, item_id:)
