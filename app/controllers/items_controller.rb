@@ -1,7 +1,11 @@
 class ItemsController < ApplicationController
   before_action :set_item, except: [:index, :new, :create]
+  # ユーザーがログインしているかを確認する
   before_action :authenticate_user!, except: [:index, :show]
+  # 現在のユーザーが商品の出品者であるかを確認する
   before_action :contributor_confirmation, only: [:edit, :update, :destroy]
+  # 商品が売却済みかどうかを確認する
+  before_action :check_item_sold, only: [:edit, :update]
 
   def index
     @items = Item.order(created_at: :desc) # 出品日時が新しい順にソート
@@ -52,5 +56,12 @@ class ItemsController < ApplicationController
 
   def contributor_confirmation
     redirect_to root_path unless current_user == @item.user
+  end
+
+  # 商品が売却済みかどうかを確認する
+  def check_item_sold
+    return unless @item.sold_out?
+
+    redirect_to root_path
   end
 end
