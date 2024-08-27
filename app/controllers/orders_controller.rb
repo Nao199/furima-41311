@@ -7,8 +7,9 @@ class OrdersController < ApplicationController
   # 現在のユーザーが商品の出品者でないかを確認する
   before_action :check_item_owner
 
+
   def index
-    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
+    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @formobject = Formobject.new
   end
 
@@ -17,7 +18,7 @@ class OrdersController < ApplicationController
     if @formobject.valid?
       pay_item
       @formobject.save
-      redirect_to root_path
+      return redirect_to root_path
     else
       gon.public_key = ENV['PAYJP_PUBLIC_KEY']
       render :index, status: :unprocessable_entity
@@ -54,4 +55,5 @@ class OrdersController < ApplicationController
       currency: 'jpy'             # 通貨の種類（日本円）
     )
   end
+  
 end

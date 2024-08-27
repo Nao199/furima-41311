@@ -29,9 +29,9 @@ class Item < ApplicationRecord
             }
 
   # sold_out? メソッドの実装
-  # def sold_out?
-  # order.present?
-  # end
+  def sold_out?
+    order.present?
+  end
 
   # ジャンルの選択が「---」の時は保存できないようにする
   validates :category_id, :condition_id, :shipping_fee_status_id, :prefecture_id, :shipping_day_id,

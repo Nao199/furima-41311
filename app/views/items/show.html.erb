@@ -9,11 +9,11 @@
     <div class="item-img-content">
       <%= image_tag @item.image, class:"item-box-img" %> 
       <%# sold out表示 %>
-      <%# if @item.sold_out? %>
+      <% if @item.sold_out? %>
         <div class="sold-out">
           <span>Sold Out!!</span>
         </div>
-      <%# end %>  
+      <% end %>  
     </div>
     <div class="item-price-box">
       <span class="item-price">
@@ -24,12 +24,15 @@
       </span>
     </div>
     <%# 条件分岐 ログインしているユーザーと出品しているユーザーが、同一人物の場合と同一人物ではない場合%>
+    <%# 商品が売り切れでない場合 %>
     <% if user_signed_in? %>
       <% if current_user.id == @item.user_id %>
-        <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %>
-        <p class="or-text">or</p>
-        <%= link_to "削除", item_path(@item), data: {turbo_method: :delete}, class:"item-destroy" %>
-        <%# 商品が売れていない場合%>
+        <% unless @item.sold_out? %>
+          <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %>
+          <p class="or-text">or</p>
+          <%= link_to "削除", item_path(@item), data: {turbo_method: :delete}, class:"item-destroy" %>
+        <% end %>
+      <%# 商品が売れていない場合%>
       <% else %>
         <% if @item.order.nil? %>
           <%= link_to "購入画面に進む", "#" ,class:"item-red-btn"%>
