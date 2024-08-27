@@ -53,4 +53,11 @@ class ItemsController < ApplicationController
   def contributor_confirmation
     redirect_to root_path unless current_user == @item.user
   end
+
+  # 商品が売却済みかどうかを確認する
+  def check_item_sold
+    return unless @item.sold_out?
+
+    redirect_to root_path
+  end
 end
