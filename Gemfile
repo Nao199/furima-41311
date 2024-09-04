@@ -76,6 +76,7 @@ end
 
 group :development do
   gem 'rubocop', require: false
+  gem 'unicorn', '6.1.0'
 end
 
 group :production do
