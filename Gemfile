@@ -79,9 +79,6 @@ group :development do
   gem 'unicorn', '6.1.0'
 end
 
-group :production do
-  gem 'pg'
-end
 
 gem 'devise'
 gem 'mini_magick'
